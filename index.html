@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Piano Settimanale - Primo Anno Magistrale</title>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      
+      /* Color coding per attività */
+      --uni-bg: #dbeafe;
+      --uni-text: #1e40af;
+      --dev-bg: #f3e8ff;
+      --dev-text: #6b21a8;
+      --dance-bg: #ffe4e6;
+      --dance-text: #9f1239;
+      --relax-bg: #dcfce7;
+      --relax-text: #166534;
+      --travel-bg: #f1f5f9;
+      --travel-text: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 24px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    /* Card Wrapper */
+    .table-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    /* Table Responsiveness */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+      min-width: 800px; /* Previene il collasso delle colonne su schermi piccoli */
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+
+    th:last-child, td:last-child {
+      border-right: none;
+    }
+
+    th {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      font-weight: 600;
+      white-space: nowrap;
+      position: sticky;
+      top: 0;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .time-col {
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      background-color: #fafafa;
+      width: 120px;
+    }
+
+    /* Activity Badges / Styles */
+    .uni {
+      background-color: var(--uni-bg);
+      color: var(--uni-text);
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    .dev {
+      background-color: var(--dev-bg);
+      color: var(--dev-text);
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    .dance {
+      background-color: var(--dance-bg);
+      color: var(--dance-text);
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    .relax {
+      background-color: var(--relax-bg);
+      color: var(--relax-text);
+      font-weight: 500;
+      border-radius: 6px;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    .travel {
+      color: var(--travel-text);
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    /* Legend Section */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 12px;
+      background: var(--card-bg);
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-box {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Schedulazione Settimanale</h1>
+      <p class="subtitle">Ottobre – Dicembre 2026 | Università, App, Tutorato & Scuola di Ballo</p>
+    </header>
+
+    <div class="table-card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Orario</th>
+              <th>Lunedì</th>
+              <th>Martedì</th>
+              <th>Mercoledì</th>
+              <th>Giovedì</th>
+              <th>Venerdì</th>
+              <th>Sabato / Domenica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="time-col">08:00 - 09:00</td>
+              <td><span class="travel">Treno Forlì → Cesena</span></td>
+              <td><span class="dev">Studio / Dev App</span></td>
+              <td><span class="travel">Treno Forlì → Cesena</span></td>
+              <td><span class="travel">Treno Forlì → Cesena</span></td>
+              <td><span class="travel">Spostamento</span></td>
+              <td><strong>Sabato:</strong> Studio (3h)</td>
+            </tr>
+            <tr>
+              <td class="time-col">09:00 - 13:00</td>
+              <td><span class="uni">Lezione Uni</span></td>
+              <td><span class="dev">Studio / Dev App</span></td>
+              <td><span class="uni">Lezione Uni</span></td>
+              <td><span class="uni">Lezione Uni</span> <small>(dalle 10)</small></td>
+              <td><span class="uni">Lezione Uni</span> <small>(09-13)</small></td>
+              <td><strong>Sabato:</strong> Dev / Tutorato (3h)</td>
+            </tr>
+            <tr>
+              <td class="time-col">13:00 - 14:00</td>
+              <td>Pausa Pranzo</td>
+              <td>Pausa Pranzo</td>
+              <td>Pausa Pranzo</td>
+              <td>Pausa Pranzo</td>
+              <td>Pausa Pranzo</td>
+              <td>Pausa</td>
+            </tr>
+            <tr>
+              <td class="time-col">14:00 - 17:00</td>
+              <td><span class="uni">Lezione Uni</span> <small>(fino 16)</small> / Rientro</td>
+              <td>Studio / Tutorato UniBo</td>
+              <td><span class="uni">Lezione Uni</span> <small>(fino 15)</small> / Rientro</td>
+              <td><span class="uni">Lezione Uni</span> <small>(fino 17)</small></td>
+              <td>Tutorato UniBo / Dev App</td>
+              <td><span class="relax">Relax / Tempo Libero</span></td>
+            </tr>
+            <tr>
+              <td class="time-col">17:00 - 19:30</td>
+              <td><span class="dev">Dev App</span> / Studio</td>
+              <td><span class="dev">Dev App</span> / Studio</td>
+              <td><span class="dev">Dev App</span> / Studio</td>
+              <td>Rientro / Riposo</td>
+              <td>Studio / <span class="dev">Dev App</span></td>
+              <td><strong>Domenica:</strong> <span class="relax">Relax Totale</span></td>
+            </tr>
+            <tr>
+              <td class="time-col">19:30 - 20:30</td>
+              <td>Cena & Prep. Ballo</td>
+              <td>Cena & Prep. Ballo</td>
+              <td>Cena & Prep. Ballo</td>
+              <td>Cena & Prep. Ballo</td>
+              <td>Cena & Relax</td>
+              <td>Tempo Libero</td>
+            </tr>
+            <tr>
+              <td class="time-col">20:30 - 23:00</td>
+              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
+              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
+              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
+              <td><span class="dance">Scuola Ballo</span> <small>(20:00-23:00)</small></td>
+              <td><span class="relax">Relax</span></td>
+              <td>Tempo Libero</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Legenda -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-box" style="background: var(--uni-bg); border: 1px solid var(--uni-text);"></div>
+        <span>Università</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: var(--dev-bg); border: 1px solid var(--dev-text);"></div>
+        <span>Dev App / Studio</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: var(--dance-bg); border: 1px solid var(--dance-text);"></div>
+        <span>Scuola di Ballo</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: var(--relax-bg); border: 1px solid var(--relax-text);"></div>
+        <span>Relax / Riposo</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
