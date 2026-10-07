@@ -3,28 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Michele Olivieri's typical week: university, app development, tutoring and dance school. October – December 2026.">
   <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
-  <title>Typical week · Michele Olivieri</title>
+  <title>Weekly calendar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      color-scheme: light dark;
       --bg: #f7f7f5;
       --surface: #ffffff;
       --ink: #16181d;
       --muted: #6b7079;
       --line: #e7e7e3;
       --neutral: #f1f1ee;
-
-      /* One accent per activity type, hues spread apart */
-      --uni: #2563eb;
-      --dev: #9333ea;
-      --tutor: #f59e0b;
-      --dance: #e11d48;
-      --free: #16a34a;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -35,12 +28,6 @@
         --muted: #8b909a;
         --line: #262931;
         --neutral: #1f2228;
-
-        --uni: #60a5fa;
-        --dev: #c084fc;
-        --tutor: #fbbf24;
-        --dance: #fb7185;
-        --free: #4ade80;
       }
     }
 
@@ -103,10 +90,12 @@
       background: var(--c, var(--line));
     }
 
+    .dot.dashed { background: none; border: 1px dashed var(--muted); }
+
     /* Day tabs (mobile only) */
     .tabs { display: none; }
 
-    /* Grid */
+    /* Grid: rows are time slots, columns are days; blocks are placed explicitly */
     .schedule {
       display: grid;
       grid-template-columns: 96px repeat(7, minmax(0, 1fr));
@@ -117,21 +106,23 @@
       padding: 10px;
     }
 
-    .row { display: contents; }
+    .head, .cell { grid-column: var(--col); }
 
     .head {
+      grid-row: 1;
       font-size: .78rem;
       font-weight: 600;
       color: var(--muted);
       padding: 8px 10px 10px;
       border-bottom: 1px solid var(--line);
       margin-bottom: 4px;
+      text-transform: capitalize;
     }
 
     .head.today { color: var(--ink); }
 
     .head.today::after {
-      content: "today";
+      content: attr(data-today);
       margin-left: 6px;
       font-size: .65rem;
       font-weight: 600;
@@ -145,6 +136,7 @@
     }
 
     .time {
+      grid-column: 1;
       font-size: .78rem;
       font-weight: 500;
       color: var(--muted);
@@ -168,32 +160,25 @@
       gap: 2px;
     }
 
+    .cell.tall { justify-content: flex-start; }
+
     .cell .t { font-weight: 600; }
     .cell .n { font-size: .74rem; color: var(--muted); }
 
     /* Same background everywhere: colour lives only in the accent bar */
-    .uni, .dev, .tutor, .dance, .free {
+    .accent {
       box-shadow: inset 4px 0 0 var(--c);
       padding-left: 16px;
     }
 
-    .uni   { --c: var(--uni); }
-    .dev   { --c: var(--dev); }
-    .tutor { --c: var(--tutor); }
-    .dance { --c: var(--dance); }
-    .free  { --c: var(--free); }
-    .free .t { color: var(--free); }
+    .free .t { color: var(--c); }
 
-    .travel {
+    .dashed {
       border-style: dashed;
       color: var(--muted);
     }
 
-    /* Long free blocks span several rows; grid auto-placement flows around them */
-    .span-day { grid-row: span 7; justify-content: flex-start; }
-    .span-sat { grid-row: span 4; justify-content: flex-start; }
-
-    .travel .t { font-weight: 500; }
+    .dashed .t { font-weight: 500; }
 
     footer {
       margin-top: 28px;
@@ -236,6 +221,7 @@
         padding: 9px 0;
         cursor: pointer;
         position: relative;
+        text-transform: capitalize;
       }
 
       .tab[aria-selected="true"] {
@@ -261,11 +247,12 @@
         padding: 8px;
       }
 
-      .row.heading { display: none; }
+      .head { display: none; }
+      .cell { grid-column: 2; }
       .cell:not(.on) { display: none; }
 
       .cell { min-height: 64px; padding: 12px 14px; font-size: .9rem; }
-      .uni, .dev, .tutor, .dance, .free { padding-left: 18px; }
+      .accent { padding-left: 18px; }
       .cell .n { font-size: .78rem; }
       .time { padding: 12px 4px; font-size: .74rem; }
 
@@ -282,125 +269,123 @@
 
   <main class="container">
     <header>
-      <p class="eyebrow">First year · Master's degree</p>
-      <h1>Typical week</h1>
-      <p class="subtitle">October – December 2026 · University, app development, tutoring and dance school</p>
+      <p class="eyebrow"></p>
+      <h1></h1>
+      <p class="subtitle"></p>
     </header>
 
-    <ul class="legend" aria-label="Legend">
-      <li><span class="dot" style="--c: var(--uni)"></span>University</li>
-      <li><span class="dot" style="--c: var(--dev)"></span>Study / App dev</li>
-      <li><span class="dot" style="--c: var(--tutor)"></span>Tutoring</li>
-      <li><span class="dot" style="--c: var(--dance)"></span>Dance school</li>
-      <li><span class="dot" style="--c: var(--free)"></span>Free time</li>
-      <li><span class="dot"></span>Commute &amp; breaks</li>
-    </ul>
-
-    <nav class="tabs" role="tablist" aria-label="Day">
-      <button class="tab" role="tab" data-day="0">Mon</button>
-      <button class="tab" role="tab" data-day="1">Tue</button>
-      <button class="tab" role="tab" data-day="2">Wed</button>
-      <button class="tab" role="tab" data-day="3">Thu</button>
-      <button class="tab" role="tab" data-day="4">Fri</button>
-      <button class="tab" role="tab" data-day="5">Sat</button>
-      <button class="tab" role="tab" data-day="6">Sun</button>
-    </nav>
-
-    <div class="schedule" role="table" aria-label="Weekly schedule">
-      <div class="row heading" role="row">
-        <div class="head" role="columnheader">Time</div>
-        <div class="head" role="columnheader" data-day="0">Monday</div>
-        <div class="head" role="columnheader" data-day="1">Tuesday</div>
-        <div class="head" role="columnheader" data-day="2">Wednesday</div>
-        <div class="head" role="columnheader" data-day="3">Thursday</div>
-        <div class="head" role="columnheader" data-day="4">Friday</div>
-        <div class="head" role="columnheader" data-day="5">Saturday</div>
-        <div class="head" role="columnheader" data-day="6">Sunday</div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>08:00</span><span>09:00</span></div>
-        <div class="cell travel" role="cell" data-day="0"><span class="t">Train Forlì → Cesena</span></div>
-        <div class="cell dev" role="cell" data-day="1"><span class="t">Study / App dev</span></div>
-        <div class="cell travel" role="cell" data-day="2"><span class="t">Train Forlì → Cesena</span></div>
-        <div class="cell travel" role="cell" data-day="3"><span class="t">Train Forlì → Cesena</span></div>
-        <div class="cell travel" role="cell" data-day="4"><span class="t">Commute</span></div>
-        <div class="cell dev" role="cell" data-day="5"><span class="t">Study</span><span class="n">3 hours</span></div>
-        <div class="cell free span-day" role="cell" data-day="6"><span class="t">Free time</span><span class="n">all day</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>09:00</span><span>13:00</span></div>
-        <div class="cell uni" role="cell" data-day="0"><span class="t">Lecture</span></div>
-        <div class="cell dev" role="cell" data-day="1"><span class="t">Study / App dev</span></div>
-        <div class="cell uni" role="cell" data-day="2"><span class="t">Lecture</span></div>
-        <div class="cell uni" role="cell" data-day="3"><span class="t">Lecture</span><span class="n">from 10:00</span></div>
-        <div class="cell uni" role="cell" data-day="4"><span class="t">Lecture</span></div>
-        <div class="cell dev" role="cell" data-day="5"><span class="t">App dev / Tutoring</span><span class="n">3 hours</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>13:00</span><span>14:00</span></div>
-        <div class="cell" role="cell" data-day="0"><span class="t">Lunch break</span></div>
-        <div class="cell" role="cell" data-day="1"><span class="t">Lunch break</span></div>
-        <div class="cell" role="cell" data-day="2"><span class="t">Lunch break</span></div>
-        <div class="cell" role="cell" data-day="3"><span class="t">Lunch break</span></div>
-        <div class="cell" role="cell" data-day="4"><span class="t">Lunch break</span></div>
-        <div class="cell" role="cell" data-day="5"><span class="t">Break</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>14:00</span><span>17:00</span></div>
-        <div class="cell uni" role="cell" data-day="0"><span class="t">Lecture</span><span class="n">until 16:00, then home</span></div>
-        <div class="cell tutor" role="cell" data-day="1"><span class="t">Study / UniBo tutoring</span></div>
-        <div class="cell uni" role="cell" data-day="2"><span class="t">Lecture</span><span class="n">until 15:00, then home</span></div>
-        <div class="cell uni" role="cell" data-day="3"><span class="t">Lecture</span><span class="n">until 17:00</span></div>
-        <div class="cell tutor" role="cell" data-day="4"><span class="t">UniBo tutoring / App dev</span></div>
-        <div class="cell free span-sat" role="cell" data-day="5"><span class="t">Free time</span><span class="n">from 14:00</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>17:00</span><span>19:30</span></div>
-        <div class="cell dev" role="cell" data-day="0"><span class="t">App dev / Study</span></div>
-        <div class="cell dev" role="cell" data-day="1"><span class="t">App dev / Study</span></div>
-        <div class="cell dev" role="cell" data-day="2"><span class="t">App dev / Study</span></div>
-        <div class="cell free" role="cell" data-day="3"><span class="t">Back home / Rest</span></div>
-        <div class="cell dev" role="cell" data-day="4"><span class="t">Study / App dev</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>19:30</span><span>20:30</span></div>
-        <div class="cell" role="cell" data-day="0"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
-        <div class="cell" role="cell" data-day="1"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
-        <div class="cell" role="cell" data-day="2"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
-        <div class="cell" role="cell" data-day="3"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
-        <div class="cell free" role="cell" data-day="4"><span class="t">Dinner &amp; free time</span></div>
-      </div>
-
-      <div class="row" role="row">
-        <div class="time" role="rowheader"><span>20:30</span><span>23:00</span></div>
-        <div class="cell dance" role="cell" data-day="0"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
-        <div class="cell dance" role="cell" data-day="1"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
-        <div class="cell dance" role="cell" data-day="2"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
-        <div class="cell dance" role="cell" data-day="3"><span class="t">Dance school</span><span class="n">20:00 – 23:00</span></div>
-        <div class="cell free" role="cell" data-day="4"><span class="t">Free time</span></div>
-      </div>
-    </div>
+    <ul class="legend" aria-label="Legend"></ul>
+    <nav class="tabs" role="tablist" aria-label="Day"></nav>
+    <div class="schedule" aria-label="Weekly schedule"></div>
 
     <footer>
-      <span>Michele Olivieri · University of Bologna</span>
-      <a href="https://github.com/olivierimichele">github.com/olivierimichele</a>
+      <span class="owner"></span>
+      <a class="link"></a>
     </footer>
   </main>
 
+  <script src="schedule.js"></script>
   <script>
-    // Mon = 0 … Sun = 6
+    const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    const { types, events, labels } = schedule;
+
+    const $ = sel => document.querySelector(sel);
+    const el = (tag, cls, text) => {
+      const n = document.createElement(tag);
+      if (cls) n.className = cls;
+      if (text != null) n.textContent = text;
+      return n;
+    };
+    const minutes = t => { const [h, m] = t.split(':'); return h * 60 + +m; };
+    const color = c => Array.isArray(c) ? `light-dark(${c[0]}, ${c[1]})` : c;
+    // 5 Jan 2026 is a Monday
+    const dayName = (i, weekday) =>
+      new Intl.DateTimeFormat(schedule.lang, { weekday }).format(new Date(2026, 0, 5 + i));
+
+    // Page text
+    document.documentElement.lang = schedule.lang;
+    document.title = `${schedule.title} · ${schedule.owner.split(' · ')[0]}`;
+    $('.eyebrow').textContent = schedule.eyebrow;
+    $('h1').textContent = schedule.title;
+    $('.subtitle').textContent = schedule.subtitle;
+    $('.owner').textContent = schedule.owner;
+    $('.link').href = schedule.link;
+    $('.link').textContent = schedule.link.replace(/^https?:\/\//, '');
+
+    // Legend
+    for (const t of Object.values(types)) {
+      const dot = el('span', t.dashed ? 'dot dashed' : 'dot');
+      if (t.color) dot.style.setProperty('--c', color(t.color));
+      const li = el('li');
+      li.append(dot, t.label);
+      $('.legend').append(li);
+    }
+
+    // Time slots: every distinct start/end time becomes a row boundary
+    const times = [...new Set(events.flatMap(e => [e.from, e.to]))]
+      .sort((a, b) => minutes(a) - minutes(b));
+    const row = t => times.indexOf(t) + 2; // row 1 is the day header
+
+    const grid = $('.schedule');
+    const timeHead = el('div', 'head', labels.time);
+    timeHead.style.setProperty('--col', 1);
+    grid.append(timeHead);
+
+    times.slice(0, -1).forEach((t, k) => {
+      const n = el('div', 'time');
+      n.style.gridRow = row(t);
+      n.append(el('span', null, t), el('span', null, times[k + 1]));
+      grid.append(n);
+    });
+
+    function block(day, from, to, type, title, note) {
+      const t = types[type] || {};
+      const c = el('div', 'cell');
+      c.dataset.day = day;
+      c.style.setProperty('--col', day + 2);
+      c.style.gridRow = `${row(from)} / ${row(to)}`;
+      if (t.color) { c.classList.add('accent'); c.style.setProperty('--c', color(t.color)); }
+      if (t.dashed) c.classList.add('dashed');
+      if (type === 'free') c.classList.add('free');
+      if (row(to) - row(from) > 1) c.classList.add('tall');
+      c.append(el('span', 't', title));
+      if (note) c.append(el('span', 'n', note));
+      grid.append(c);
+    }
+
+    // ponytail: overlapping events on the same day are not detected, they just stack
+    DAYS.forEach((key, day) => {
+      const head = el('div', 'head', dayName(day, 'long'));
+      head.dataset.day = day;
+      head.dataset.today = labels.today;
+      head.style.setProperty('--col', day + 2);
+      grid.append(head);
+
+      const tab = el('button', 'tab', dayName(day, 'short'));
+      tab.setAttribute('role', 'tab');
+      tab.dataset.day = day;
+      $('.tabs').append(tab);
+
+      // Fill every gap between events with an automatic free-time block
+      const free = (a, b) => block(day, a, b, 'free', types.free.label, row(b) - row(a) > 1 ? `${a} – ${b}` : null);
+      let cursor = times[0];
+      events.filter(e => e.days.includes(key))
+        .sort((a, b) => minutes(a.from) - minutes(b.from))
+        .forEach(e => {
+          if (minutes(e.from) > minutes(cursor)) free(cursor, e.from);
+          block(day, e.from, e.to, e.type, e.title, e.note);
+          cursor = e.to;
+        });
+      if (cursor !== times.at(-1)) free(cursor, times.at(-1));
+    });
+
+    // Day switching on mobile; opens on today
     const today = (new Date().getDay() + 6) % 7;
     const tabs = document.querySelectorAll('.tab');
     const cells = document.querySelectorAll('.cell');
 
     document.querySelectorAll(`[data-day="${today}"]:is(.head, .tab)`)
-      .forEach(el => el.classList.add('today'));
+      .forEach(n => n.classList.add('today'));
 
     function show(day) {
       cells.forEach(c => c.classList.toggle('on', c.dataset.day == day));
