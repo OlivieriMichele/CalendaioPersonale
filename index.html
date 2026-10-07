@@ -1,301 +1,415 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Piano Settimanale - Primo Anno Magistrale</title>
+  <meta name="description" content="Michele Olivieri's typical week: university, app development, tutoring and dance school. October – December 2026.">
+  <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
+  <title>Typical week · Michele Olivieri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #f8fafc;
-      --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      
-      /* Color coding per attività */
-      --uni-bg: #dbeafe;
-      --uni-text: #1e40af;
-      --dev-bg: #f3e8ff;
-      --dev-text: #6b21a8;
-      --dance-bg: #ffe4e6;
-      --dance-text: #9f1239;
-      --relax-bg: #dcfce7;
-      --relax-text: #166534;
-      --travel-bg: #f1f5f9;
-      --travel-text: #475569;
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --ink: #16181d;
+      --muted: #6b7079;
+      --line: #e7e7e3;
+      --neutral: #f1f1ee;
+
+      /* One accent per activity type, hues spread apart */
+      --uni: #2563eb;
+      --dev: #9333ea;
+      --tutor: #f59e0b;
+      --dance: #e11d48;
+      --free: #16a34a;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0e0f12;
+        --surface: #16181d;
+        --ink: #eceef2;
+        --muted: #8b909a;
+        --line: #262931;
+        --neutral: #1f2228;
+
+        --uni: #60a5fa;
+        --dev: #c084fc;
+        --tutor: #fbbf24;
+        --dance: #fb7185;
+        --free: #4ade80;
+      }
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      padding: 24px 16px;
-      line-height: 1.5;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "tnum" 1, "cv11" 1;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
+      padding: 48px 24px 40px;
     }
 
-    header {
-      margin-bottom: 24px;
+    /* Header */
+    .eyebrow {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     h1 {
-      font-size: 1.5rem;
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
       font-weight: 700;
-      color: var(--text-main);
+      letter-spacing: -.025em;
+      margin-top: 6px;
     }
 
-    p.subtitle {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 4px;
+    .subtitle {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-top: 6px;
     }
 
-    /* Card Wrapper */
-    .table-card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-    }
-
-    /* Table Responsiveness */
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.875rem;
-      min-width: 800px; /* Previene il collasso delle colonne su schermi piccoli */
-    }
-
-    th, td {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border-color);
-      border-right: 1px solid var(--border-color);
-      vertical-align: middle;
-    }
-
-    th:last-child, td:last-child {
-      border-right: none;
-    }
-
-    th {
-      background-color: #f1f5f9;
-      color: var(--text-main);
-      font-weight: 600;
-      white-space: nowrap;
-      position: sticky;
-      top: 0;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .time-col {
-      font-weight: 600;
-      color: var(--text-muted);
-      white-space: nowrap;
-      background-color: #fafafa;
-      width: 120px;
-    }
-
-    /* Activity Badges / Styles */
-    .uni {
-      background-color: var(--uni-bg);
-      color: var(--uni-text);
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 4px 8px;
-      display: inline-block;
-    }
-
-    .dev {
-      background-color: var(--dev-bg);
-      color: var(--dev-text);
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 4px 8px;
-      display: inline-block;
-    }
-
-    .dance {
-      background-color: var(--dance-bg);
-      color: var(--dance-text);
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 4px 8px;
-      display: inline-block;
-    }
-
-    .relax {
-      background-color: var(--relax-bg);
-      color: var(--relax-text);
-      font-weight: 500;
-      border-radius: 6px;
-      padding: 4px 8px;
-      display: inline-block;
-    }
-
-    .travel {
-      color: var(--travel-text);
-      font-size: 0.8rem;
-      font-style: italic;
-    }
-
-    /* Legend Section */
+    /* Legend */
     .legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-      padding: 12px;
-      background: var(--card-bg);
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-size: 0.8rem;
+      gap: 6px 18px;
+      margin: 28px 0 20px;
+      font-size: .8rem;
+      color: var(--muted);
+      list-style: none;
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
+    .legend li { display: flex; align-items: center; gap: 7px; }
+
+    .dot {
+      width: 4px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--c, var(--line));
+    }
+
+    /* Day tabs (mobile only) */
+    .tabs { display: none; }
+
+    /* Grid */
+    .schedule {
+      display: grid;
+      grid-template-columns: 96px repeat(7, minmax(0, 1fr));
       gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 10px;
     }
 
-    .legend-box {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
+    .row { display: contents; }
+
+    .head {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      padding: 8px 10px 10px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4px;
+    }
+
+    .head.today { color: var(--ink); }
+
+    .head.today::after {
+      content: "today";
+      margin-left: 6px;
+      font-size: .65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--surface);
+      background: var(--ink);
+      border-radius: 4px;
+      padding: 1px 5px;
+      vertical-align: 1px;
+    }
+
+    .time {
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 10px 10px 10px 4px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .time span + span { opacity: .6; }
+
+    .cell {
+      --c: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: .84rem;
+      min-height: 58px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+    }
+
+    .cell .t { font-weight: 600; }
+    .cell .n { font-size: .74rem; color: var(--muted); }
+
+    /* Same background everywhere: colour lives only in the accent bar */
+    .uni, .dev, .tutor, .dance, .free {
+      box-shadow: inset 4px 0 0 var(--c);
+      padding-left: 16px;
+    }
+
+    .uni   { --c: var(--uni); }
+    .dev   { --c: var(--dev); }
+    .tutor { --c: var(--tutor); }
+    .dance { --c: var(--dance); }
+    .free  { --c: var(--free); }
+    .free .t { color: var(--free); }
+
+    .travel {
+      border-style: dashed;
+      color: var(--muted);
+    }
+
+    /* Long free blocks span several rows; grid auto-placement flows around them */
+    .span-day { grid-row: span 7; justify-content: flex-start; }
+    .span-sat { grid-row: span 4; justify-content: flex-start; }
+
+    .travel .t { font-weight: 500; }
+
+    footer {
+      margin-top: 28px;
+      font-size: .78rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    footer a { color: inherit; text-underline-offset: 3px; }
+    footer a:hover { color: var(--ink); }
+
+    /* Mobile: one day at a time */
+    @media (max-width: 860px) {
+      .container { padding: 28px 16px 32px; }
+
+      .tabs {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        padding: 4px;
+        margin-bottom: 14px;
+        background: var(--neutral);
+        border-radius: 12px;
+        position: sticky;
+        top: 8px;
+        z-index: 1;
+      }
+
+      .tab {
+        font: inherit;
+        font-size: .8rem;
+        font-weight: 600;
+        color: var(--muted);
+        background: none;
+        border: 0;
+        border-radius: 9px;
+        padding: 9px 0;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .tab[aria-selected="true"] {
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+      }
+
+      .tab.today::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 3px;
+        width: 4px;
+        height: 4px;
+        margin-left: -2px;
+        border-radius: 50%;
+        background: var(--ink);
+      }
+
+      .schedule {
+        grid-template-columns: 62px 1fr;
+        padding: 8px;
+      }
+
+      .row.heading { display: none; }
+      .cell:not(.on) { display: none; }
+
+      .cell { min-height: 64px; padding: 12px 14px; font-size: .9rem; }
+      .uni, .dev, .tutor, .dance, .free { padding-left: 18px; }
+      .cell .n { font-size: .78rem; }
+      .time { padding: 12px 4px; font-size: .74rem; }
+
+      .legend { margin: 20px 0 16px; }
+    }
+
+    @media (max-width: 860px) and (prefers-reduced-motion: no-preference) {
+      .cell.on { animation: in .18s ease-out; }
+      @keyframes in { from { opacity: 0; transform: translateY(2px); } }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <main class="container">
     <header>
-      <h1>Schedulazione Settimanale</h1>
-      <p class="subtitle">Ottobre – Dicembre 2026 | Università, App, Tutorato & Scuola di Ballo</p>
+      <p class="eyebrow">First year · Master's degree</p>
+      <h1>Typical week</h1>
+      <p class="subtitle">October – December 2026 · University, app development, tutoring and dance school</p>
     </header>
 
-    <div class="table-card">
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Orario</th>
-              <th>Lunedì</th>
-              <th>Martedì</th>
-              <th>Mercoledì</th>
-              <th>Giovedì</th>
-              <th>Venerdì</th>
-              <th>Sabato / Domenica</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="time-col">08:00 - 09:00</td>
-              <td><span class="travel">Treno Forlì → Cesena</span></td>
-              <td><span class="dev">Studio / Dev App</span></td>
-              <td><span class="travel">Treno Forlì → Cesena</span></td>
-              <td><span class="travel">Treno Forlì → Cesena</span></td>
-              <td><span class="travel">Spostamento</span></td>
-              <td><strong>Sabato:</strong> Studio (3h)</td>
-            </tr>
-            <tr>
-              <td class="time-col">09:00 - 13:00</td>
-              <td><span class="uni">Lezione Uni</span></td>
-              <td><span class="dev">Studio / Dev App</span></td>
-              <td><span class="uni">Lezione Uni</span></td>
-              <td><span class="uni">Lezione Uni</span> <small>(dalle 10)</small></td>
-              <td><span class="uni">Lezione Uni</span> <small>(09-13)</small></td>
-              <td><strong>Sabato:</strong> Dev / Tutorato (3h)</td>
-            </tr>
-            <tr>
-              <td class="time-col">13:00 - 14:00</td>
-              <td>Pausa Pranzo</td>
-              <td>Pausa Pranzo</td>
-              <td>Pausa Pranzo</td>
-              <td>Pausa Pranzo</td>
-              <td>Pausa Pranzo</td>
-              <td>Pausa</td>
-            </tr>
-            <tr>
-              <td class="time-col">14:00 - 17:00</td>
-              <td><span class="uni">Lezione Uni</span> <small>(fino 16)</small> / Rientro</td>
-              <td>Studio / Tutorato UniBo</td>
-              <td><span class="uni">Lezione Uni</span> <small>(fino 15)</small> / Rientro</td>
-              <td><span class="uni">Lezione Uni</span> <small>(fino 17)</small></td>
-              <td>Tutorato UniBo / Dev App</td>
-              <td><span class="relax">Relax / Tempo Libero</span></td>
-            </tr>
-            <tr>
-              <td class="time-col">17:00 - 19:30</td>
-              <td><span class="dev">Dev App</span> / Studio</td>
-              <td><span class="dev">Dev App</span> / Studio</td>
-              <td><span class="dev">Dev App</span> / Studio</td>
-              <td>Rientro / Riposo</td>
-              <td>Studio / <span class="dev">Dev App</span></td>
-              <td><strong>Domenica:</strong> <span class="relax">Relax Totale</span></td>
-            </tr>
-            <tr>
-              <td class="time-col">19:30 - 20:30</td>
-              <td>Cena & Prep. Ballo</td>
-              <td>Cena & Prep. Ballo</td>
-              <td>Cena & Prep. Ballo</td>
-              <td>Cena & Prep. Ballo</td>
-              <td>Cena & Relax</td>
-              <td>Tempo Libero</td>
-            </tr>
-            <tr>
-              <td class="time-col">20:30 - 23:00</td>
-              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
-              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
-              <td><span class="dance">Scuola Ballo</span> <small>(20:30-22:30)</small></td>
-              <td><span class="dance">Scuola Ballo</span> <small>(20:00-23:00)</small></td>
-              <td><span class="relax">Relax</span></td>
-              <td>Tempo Libero</td>
-            </tr>
-          </tbody>
-        </table>
+    <ul class="legend" aria-label="Legend">
+      <li><span class="dot" style="--c: var(--uni)"></span>University</li>
+      <li><span class="dot" style="--c: var(--dev)"></span>Study / App dev</li>
+      <li><span class="dot" style="--c: var(--tutor)"></span>Tutoring</li>
+      <li><span class="dot" style="--c: var(--dance)"></span>Dance school</li>
+      <li><span class="dot" style="--c: var(--free)"></span>Free time</li>
+      <li><span class="dot"></span>Commute &amp; breaks</li>
+    </ul>
+
+    <nav class="tabs" role="tablist" aria-label="Day">
+      <button class="tab" role="tab" data-day="0">Mon</button>
+      <button class="tab" role="tab" data-day="1">Tue</button>
+      <button class="tab" role="tab" data-day="2">Wed</button>
+      <button class="tab" role="tab" data-day="3">Thu</button>
+      <button class="tab" role="tab" data-day="4">Fri</button>
+      <button class="tab" role="tab" data-day="5">Sat</button>
+      <button class="tab" role="tab" data-day="6">Sun</button>
+    </nav>
+
+    <div class="schedule" role="table" aria-label="Weekly schedule">
+      <div class="row heading" role="row">
+        <div class="head" role="columnheader">Time</div>
+        <div class="head" role="columnheader" data-day="0">Monday</div>
+        <div class="head" role="columnheader" data-day="1">Tuesday</div>
+        <div class="head" role="columnheader" data-day="2">Wednesday</div>
+        <div class="head" role="columnheader" data-day="3">Thursday</div>
+        <div class="head" role="columnheader" data-day="4">Friday</div>
+        <div class="head" role="columnheader" data-day="5">Saturday</div>
+        <div class="head" role="columnheader" data-day="6">Sunday</div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>08:00</span><span>09:00</span></div>
+        <div class="cell travel" role="cell" data-day="0"><span class="t">Train Forlì → Cesena</span></div>
+        <div class="cell dev" role="cell" data-day="1"><span class="t">Study / App dev</span></div>
+        <div class="cell travel" role="cell" data-day="2"><span class="t">Train Forlì → Cesena</span></div>
+        <div class="cell travel" role="cell" data-day="3"><span class="t">Train Forlì → Cesena</span></div>
+        <div class="cell travel" role="cell" data-day="4"><span class="t">Commute</span></div>
+        <div class="cell dev" role="cell" data-day="5"><span class="t">Study</span><span class="n">3 hours</span></div>
+        <div class="cell free span-day" role="cell" data-day="6"><span class="t">Free time</span><span class="n">all day</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>09:00</span><span>13:00</span></div>
+        <div class="cell uni" role="cell" data-day="0"><span class="t">Lecture</span></div>
+        <div class="cell dev" role="cell" data-day="1"><span class="t">Study / App dev</span></div>
+        <div class="cell uni" role="cell" data-day="2"><span class="t">Lecture</span></div>
+        <div class="cell uni" role="cell" data-day="3"><span class="t">Lecture</span><span class="n">from 10:00</span></div>
+        <div class="cell uni" role="cell" data-day="4"><span class="t">Lecture</span></div>
+        <div class="cell dev" role="cell" data-day="5"><span class="t">App dev / Tutoring</span><span class="n">3 hours</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>13:00</span><span>14:00</span></div>
+        <div class="cell" role="cell" data-day="0"><span class="t">Lunch break</span></div>
+        <div class="cell" role="cell" data-day="1"><span class="t">Lunch break</span></div>
+        <div class="cell" role="cell" data-day="2"><span class="t">Lunch break</span></div>
+        <div class="cell" role="cell" data-day="3"><span class="t">Lunch break</span></div>
+        <div class="cell" role="cell" data-day="4"><span class="t">Lunch break</span></div>
+        <div class="cell" role="cell" data-day="5"><span class="t">Break</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>14:00</span><span>17:00</span></div>
+        <div class="cell uni" role="cell" data-day="0"><span class="t">Lecture</span><span class="n">until 16:00, then home</span></div>
+        <div class="cell tutor" role="cell" data-day="1"><span class="t">Study / UniBo tutoring</span></div>
+        <div class="cell uni" role="cell" data-day="2"><span class="t">Lecture</span><span class="n">until 15:00, then home</span></div>
+        <div class="cell uni" role="cell" data-day="3"><span class="t">Lecture</span><span class="n">until 17:00</span></div>
+        <div class="cell tutor" role="cell" data-day="4"><span class="t">UniBo tutoring / App dev</span></div>
+        <div class="cell free span-sat" role="cell" data-day="5"><span class="t">Free time</span><span class="n">from 14:00</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>17:00</span><span>19:30</span></div>
+        <div class="cell dev" role="cell" data-day="0"><span class="t">App dev / Study</span></div>
+        <div class="cell dev" role="cell" data-day="1"><span class="t">App dev / Study</span></div>
+        <div class="cell dev" role="cell" data-day="2"><span class="t">App dev / Study</span></div>
+        <div class="cell free" role="cell" data-day="3"><span class="t">Back home / Rest</span></div>
+        <div class="cell dev" role="cell" data-day="4"><span class="t">Study / App dev</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>19:30</span><span>20:30</span></div>
+        <div class="cell" role="cell" data-day="0"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
+        <div class="cell" role="cell" data-day="1"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
+        <div class="cell" role="cell" data-day="2"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
+        <div class="cell" role="cell" data-day="3"><span class="t">Dinner</span><span class="n">and dance prep</span></div>
+        <div class="cell free" role="cell" data-day="4"><span class="t">Dinner &amp; free time</span></div>
+      </div>
+
+      <div class="row" role="row">
+        <div class="time" role="rowheader"><span>20:30</span><span>23:00</span></div>
+        <div class="cell dance" role="cell" data-day="0"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
+        <div class="cell dance" role="cell" data-day="1"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
+        <div class="cell dance" role="cell" data-day="2"><span class="t">Dance school</span><span class="n">20:30 – 22:30</span></div>
+        <div class="cell dance" role="cell" data-day="3"><span class="t">Dance school</span><span class="n">20:00 – 23:00</span></div>
+        <div class="cell free" role="cell" data-day="4"><span class="t">Free time</span></div>
       </div>
     </div>
 
-    <!-- Legenda -->
-    <div class="legend">
-      <div class="legend-item">
-        <div class="legend-box" style="background: var(--uni-bg); border: 1px solid var(--uni-text);"></div>
-        <span>Università</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-box" style="background: var(--dev-bg); border: 1px solid var(--dev-text);"></div>
-        <span>Dev App / Studio</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-box" style="background: var(--dance-bg); border: 1px solid var(--dance-text);"></div>
-        <span>Scuola di Ballo</span>
-      </div>
-      <div class="legend-item">
-        <div class="legend-box" style="background: var(--relax-bg); border: 1px solid var(--relax-text);"></div>
-        <span>Relax / Riposo</span>
-      </div>
-    </div>
-  </div>
+    <footer>
+      <span>Michele Olivieri · University of Bologna</span>
+      <a href="https://github.com/olivierimichele">github.com/olivierimichele</a>
+    </footer>
+  </main>
+
+  <script>
+    // Mon = 0 … Sun = 6
+    const today = (new Date().getDay() + 6) % 7;
+    const tabs = document.querySelectorAll('.tab');
+    const cells = document.querySelectorAll('.cell');
+
+    document.querySelectorAll(`[data-day="${today}"]:is(.head, .tab)`)
+      .forEach(el => el.classList.add('today'));
+
+    function show(day) {
+      cells.forEach(c => c.classList.toggle('on', c.dataset.day == day));
+      tabs.forEach(t => t.setAttribute('aria-selected', t.dataset.day == day));
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.day)));
+    show(today);
+  </script>
 
 </body>
 </html>
